@@ -50,8 +50,8 @@ pipeline {
                     mail (
                         subject: "Jenkins Pipeline - Unit and Integration Tests Stage Status",
                         body: "The Unit and Integration Tests stage has completed. Please check Jenkins for details.",
-                        to: "$EMAIL_RECIPIENT",
-                        attachLog: true
+                        to: "$EMAIL_RECIPIENT"
+            
                     )
                 }
             }
