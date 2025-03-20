@@ -1,9 +1,7 @@
 pipeline {
     agent any
     environment {
-        STAGING_SERVER = 'staging.example.com'
-        PROD_SERVER = 'prod.example.com'
-        EMAIL = 'vanshika4823.be23@chitkara.edu.in'
+                EMAIL = 'vanshika4823.be23@chitkara.edu.in'
     }
     stages {
         stage('Build') {
