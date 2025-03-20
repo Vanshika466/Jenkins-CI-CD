@@ -47,7 +47,7 @@ pipeline {
                     echo "Tool: Jenkins Email Extension Plugin"
                     echo "Configuration: Set up 'emailext' in Jenkins to send test results."
 
-                    emailext (
+                    mail (
                         subject: "Jenkins Pipeline - Unit and Integration Tests Stage Status",
                         body: "The Unit and Integration Tests stage has completed. Please check Jenkins for details.",
                         to: "$EMAIL_RECIPIENT",
