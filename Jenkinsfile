@@ -21,21 +21,21 @@ pipeline {
         stage('Restore Dependencies') {
             steps {
                 echo "Restoring NuGet packages..."
-                echo 'dotnet restore'  
+                echo "dotnet restore"  
             }
         }
 
         stage('Build') {
             steps {
                 echo "Building the .NET application..."
-                echo 'dotnet build --configuration Release'  
+                echo "dotnet build --configuration Release"  
             }
         }
 
         stage('Run Unit & Integration Tests') {
             steps {
                 echo "Running unit and integration tests..."
-                echo 'dotnet test --logger trx'  
+                echo "dotnet test --logger trx"  
             }
             post {
                 always {
@@ -53,7 +53,7 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo "Running static code analysis..."
-                echo 'dotnet build --configuration Release /p:EnableNETAnalyzers=true'  
+                echo "dotnet build --configuration Release /p:EnableNETAnalyzers=true" 
             }
         }
     }
