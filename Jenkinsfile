@@ -9,38 +9,45 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                echo "Cloning the GitHub repository..."
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[url: 'https://github.com/Vanshika466/Jenkins-CI-CD.git']]
-                ])
+                echo "Step: Cloning the GitHub repository."
+                echo "Tool: Git"
+                echo "Command: Use 'git clone' or Jenkins' built-in 'checkout' step."
             }
         }
 
         stage('Restore Dependencies') {
             steps {
-                echo "Restoring NuGet packages..."
-                echo "dotnet restore"  
+                echo "Step: Restoring project dependencies."
+                echo "Tool: NuGet (for .NET projects)"
+                echo "Command: Use 'dotnet restore' to fetch required packages."
             }
         }
 
         stage('Build') {
             steps {
-                echo "Building the .NET application..."
-                echo "dotnet build --configuration Release"  
+                echo "Step: Building the .NET application."
+                echo "Tool: .NET SDK"
+                echo "Command: Use 'dotnet build --configuration Release' to compile the code."
             }
         }
 
         stage('Run Unit & Integration Tests') {
             steps {
-                echo "Running unit and integration tests..."
-                echo "dotnet test --logger trx"  
+                echo "Step: Running unit and integration tests."
+                echo "Tool: xUnit, NUnit, MSTest"
+                echo "Command: Use 'dotnet test --logger trx' to execute tests and generate logs."
             }
             post {
                 always {
-                    junit '**/*.trx' // Collect test results
-                    mail (
+                    echo "Step: Collecting and publishing test results."
+                    echo "Tool: Jenkins JUnit plugin"
+                    echo "Command: Use 'junit **/*.trx' to process test reports."
+                    
+                    echo "Step: Sending notification email."
+                    echo "Tool: Jenkins Email Extension Plugin"
+                    echo "Configuration: Set up 'emailext' in Jenkins to send test results."
+
+                    emailext (
                         subject: "Jenkins Pipeline - Unit and Integration Tests Stage Status",
                         body: "The Unit and Integration Tests stage has completed. Please check Jenkins for details.",
                         to: "$EMAIL_RECIPIENT",
@@ -52,15 +59,17 @@ pipeline {
 
         stage('Code Analysis') {
             steps {
-                echo "Running static code analysis..."
-                echo "dotnet build --configuration Release /p:EnableNETAnalyzers=true" 
+                echo "Step: Running static code analysis."
+                echo "Tool: .NET Analyzers, SonarQube, ReSharper"
+                echo "Command: Use 'dotnet build --configuration Release /p:EnableNETAnalyzers=true' or integrate with SonarQube."
             }
         }
     }
 
     post {
         failure {
-            echo "Build failed!"
+            echo "Step: Handling build failures."
+            echo "Possible Actions: Check logs, fix errors, retry the pipeline."
         }
     }
 }
