@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo "Step: Cloning the GitHub repository."
                 echo "Tool: Git"
-                echo "Command: Use 'git clone' or Jenkins' built-in 'checkout' step."
+                echo "Command: Use 'git clone' or Jenkins' built-in 'checkout' step"
             }
         }
 
