@@ -3,36 +3,32 @@ pipeline {
     environment {
         STAGING_SERVER = 'staging.example.com'
         PROD_SERVER = 'prod.example.com'
-        EMAIL = 'vanshika4823.be23@chitkara.edu.in'
+        EMAIL = 'priyanka4800.be23@chitkara.edu.in'
     }
     stages {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                echo 'Vanshika'
-                //sh 'npm install'
-                
+                sh 'npm install'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit tests...'
-                //sh 'npm test || exit 1'
+                sh 'npm test || exit 1'
             }
         }
-         stage('Code Analysis') {
+        stage('Code Analysis') {
             steps {
                 echo 'Performing code analysis...'
-                //sh 'npm run lint || exit 1' 
+                sh 'npm run lint || exit 1'
             }
         }
         stage('Security Scan') {
             steps {
                 echo 'Running SonarQube Security Scan...'
-                
             }
         }
-
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to Staging...'
@@ -41,22 +37,23 @@ pipeline {
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging...'
-                }
+            }
         }
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to Production...'
-                
             }
         }
     }
     post {
         always {
-            mail (
-                subject: "Jenkins Pipeline Execution",
-                body: "Pipeline execution complete. Check Jenkins for details...",
-                to: "$EMAIL"
-            )
-        }
-    }
+            
+                mail (
+                    subject: "Jenkins Pipeline Execution",
+                    body: "Pipeline execution complete. Check Jenkins for details...",
+                    to: "${EMAIL}"
+                )
+            
+        }
+    }
 }
