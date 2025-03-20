@@ -9,6 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
+                echo 'Vanshika'
                 //sh 'npm install'
                 
             }
