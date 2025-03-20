@@ -1,75 +1,61 @@
-// Minor update to trigger Jenkins
 pipeline {
     agent any
-
     environment {
-        EMAIL_RECIPIENT = "vanshika4823.be23@chitkara.edu.in"
+        STAGING_SERVER = 'staging.example.com'
+        PROD_SERVER = 'prod.example.com'
+        EMAIL = 'priyanka4800.be23@chitkara.edu.in'
     }
-
     stages {
-        stage('Clone Repository') {
-            steps {
-                echo "Step: Cloning the GitHub repository."
-                echo "Tool: Git"
-                echo "Command: Use 'git clone' or Jenkins' built-in 'checkout' step"
-            }
-        }
-
-        stage('Restore Dependencies') {
-            steps {
-                echo "Step: Restoring project dependencies."
-                echo "Tool: NuGet (for .NET projects)"
-                echo "Command: Use 'dotnet restore' to fetch required packages."
-            }
-        }
-
         stage('Build') {
             steps {
-                echo "Step: Building the .NET application."
-                echo "Tool: .NET SDK"
-                echo "Command: Use 'dotnet build --configuration Release' to compile the code."
+                echo 'Building the project...'
+                sh 'npm install'
+                
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                echo 'Running unit tests...'
+                sh 'npm test || exit 1'
+            }
+        }
+         stage('Code Analysis') {
+            steps {
+                echo 'Performing code analysis...'
+                sh 'npm run lint || exit 1' 
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo 'Running SonarQube Security Scan...'
+                
             }
         }
 
-        stage('Run Unit & Integration Tests') {
+        stage('Deploy to Staging') {
             steps {
-                echo "Step: Running unit and integration tests."
-                echo "Tool: xUnit, NUnit, MSTest"
-                echo "Command: Use 'dotnet test --logger trx' to execute tests and generate logs."
+                echo 'Deploying to Staging...'
             }
-            post {
-                always {
-                    echo "Step: Collecting and publishing test results."
-                    echo "Tool: Jenkins JUnit plugin"
-                    echo "Command: Use 'junit **/*.trx' to process test reports."
-                    
-                    echo "Step: Sending notification email."
-                    echo "Tool: Jenkins Email Extension Plugin"
-                    echo "Configuration: Set up 'emailext' in Jenkins to send test results."
-
-                    mail (
-                        subject: "Jenkins Pipeline - Unit and Integration Tests Stage Status",
-                        body: "The Unit and Integration Tests stage has completed. Please check Jenkins for details.",
-                        to: "$EMAIL_RECIPIENT"
-            
-                    )
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging...'
                 }
-            }
         }
-
-        stage('Code Analysis') {
+        stage('Deploy to Production') {
             steps {
-                echo "Step: Running static code analysis."
-                echo "Tool: .NET Analyzers, SonarQube, ReSharper"
-                echo "Command: Use 'dotnet build --configuration Release /p:EnableNETAnalyzers=true' or integrate with SonarQube."
+                echo 'Deploying to Production...'
+                
             }
         }
     }
-
     post {
-        failure {
-            echo "Step: Handling build failures."
-            echo "Possible Actions: Check logs, fix errors, retry the pipeline."
-        }
-    }
+        always {
+            mail (
+                subject: "Jenkins Pipeline Execution",
+                body: "Pipeline execution complete. Check Jenkins for details...",
+                to: "$EMAIL"
+            )
+        }
+    }
 }
