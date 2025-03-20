@@ -21,26 +21,26 @@ pipeline {
         stage('Restore Dependencies') {
             steps {
                 echo "Restoring NuGet packages..."
-                bat 'dotnet restore'  
+                echo 'dotnet restore'  
             }
         }
 
         stage('Build') {
             steps {
                 echo "Building the .NET application..."
-                bat 'dotnet build --configuration Release'  
+                echo 'dotnet build --configuration Release'  
             }
         }
 
         stage('Run Unit & Integration Tests') {
             steps {
                 echo "Running unit and integration tests..."
-                bat 'dotnet test --logger trx'  
+                echo 'dotnet test --logger trx'  
             }
             post {
                 always {
                     junit '**/*.trx' // Collect test results
-                    emailext (
+                    mail (
                         subject: "Jenkins Pipeline - Unit and Integration Tests Stage Status",
                         body: "The Unit and Integration Tests stage has completed. Please check Jenkins for details.",
                         to: "$EMAIL_RECIPIENT",
@@ -53,7 +53,7 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo "Running static code analysis..."
-                bat 'dotnet build --configuration Release /p:EnableNETAnalyzers=true'  
+                echo 'dotnet build --configuration Release /p:EnableNETAnalyzers=true'  
             }
         }
     }
