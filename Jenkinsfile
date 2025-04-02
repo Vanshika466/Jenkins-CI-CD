@@ -16,6 +16,7 @@ pipeline {
             steps {
                 echo "Step: Running unit and integration tests."
                 echo "Tool: xUnit, NUnit, MSTest"
+                echo "Vanshika"
                 echo "Command: Use 'dotnet test --logger trx' to execute tests and generate logs."
             }
         }
