@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                echo "Vanshika"
                 echo "Step: Building the .NET application."
                 echo "Tool: .NET SDK"
                 echo "Command: Use 'dotnet build --configuration Release' to compile the code."
