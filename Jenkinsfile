@@ -3,9 +3,6 @@ pipeline {
     environment {
         EMAIL = 'vanshika4823.be23@chitkara.edu.in'
     }
-    triggers {
-        pollSCM('* * * * *') // Polling every minute for Git changes
-    }
     stages {
         stage('Build') {
             steps {
