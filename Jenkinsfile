@@ -1,23 +1,23 @@
 pipeline {
     agent any
     environment {
-        EMAIL = 'vanshika4823.be23@chitkara.edu.in'
+                EMAIL = 'vanshika4823.be23@chitkara.edu.in'
     }
     stages {
         stage('Build') {
             steps {
-                echo "Vanshika"
-                echo "Step: Building the .NET application."
+              echo "Step: Building the .NET application."
                 echo "Tool: .NET SDK"
                 echo "Command: Use 'dotnet build --configuration Release' to compile the code."
+
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                echo "Step: Running unit and integration tests."
+               echo "Step: Running unit and integration tests."
                 echo "Tool: xUnit, NUnit, MSTest"
-                echo "Vanshika"
                 echo "Command: Use 'dotnet test --logger trx' to execute tests and generate logs."
+
             }
         }
         stage('Code Analysis') {
@@ -25,6 +25,7 @@ pipeline {
                 echo "Step: Running static code analysis."
                 echo "Tool: .NET Analyzers, SonarQube, ReSharper"
                 echo "Command: Use 'dotnet build --configuration Release /p:EnableNETAnalyzers=true' or integrate with SonarQube."
+
             }
         }
         stage('Security Scan') {
@@ -58,11 +59,13 @@ pipeline {
     }
     post {
         always {
-            mail (
-                subject: "Jenkins Pipeline Execution",
-                body: "Pipeline execution complete. Check Jenkins for details...",
-                to: "${EMAIL}"
-            )
+            
+                mail (
+                    subject: "Jenkins Pipeline Execution",
+                    body: "Pipeline execution complete. Check Jenkins for details...",
+                    to: "${EMAIL}"
+                )
+            
         }
     }
 }
