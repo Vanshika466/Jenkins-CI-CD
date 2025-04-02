@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-                EMAIL = 'priyanka4800.be23@chitkara.edu.in'
+                EMAIL = 'priyanshiramdev3@gmail.com'
     }
     stages {
         stage('Build') {
