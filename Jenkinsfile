@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
               echo "Step: Building the .NET application."
-                echo "Tool: .NET SDK, MSBuild"
+                echo "Tool: .NET SDK, MSBuild, NUget"
 
             }
         }
