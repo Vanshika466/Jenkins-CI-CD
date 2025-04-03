@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
               echo "Step: Building the .NET application."
-                echo "Tool: .NET SDK"
+                echo "Tool: .NET SDK, MSBuild"
 
             }
         }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 echo "Step: Deploying to staging server."
                 echo "Environment: AWS EC2 instance"
-                echo "Tools: Ansible,Terraform"
+                echo "Tools: Ansible,Terraform,Docker"
             }
         }
         stage('Integration Tests on Staging') {
